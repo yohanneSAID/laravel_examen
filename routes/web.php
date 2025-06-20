@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\ChauffeurController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TrajetController;
+use App\Http\Controllers\VehiculeController;
+use App\Http\Controllers\homeController;
+
+use App\Models\Vehicule;
+use App\Models\Reservation;
+use App\Models\Chauffeur;
+use App\Models\Trajet;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [homeController::class, 'index'])->name('home');
+Route::ressource('reservations', ReservationController::class);
+Route::ressource('vehicules', VehiculeController::class);
+Route::ressource('chauffeurs', ChauffeurController::class);
+Route::ressource('trajets', TrajetController::class);
