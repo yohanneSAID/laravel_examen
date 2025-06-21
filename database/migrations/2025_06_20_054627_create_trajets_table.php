@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('depart');
             $table->string('destination');
             $table->time('duree_estimee');
+            $table->timestamps();
         });
     }
 

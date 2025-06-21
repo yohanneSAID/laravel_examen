@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nom');
             $table->string('contact');
             $table->string('disponibilite');
-
             $table->timestamps();
         });
     }

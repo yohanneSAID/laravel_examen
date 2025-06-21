@@ -24,8 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->dropForeign(['chauffeur_id']);
-            $table->dropColumn(['chauffeur_id']);
+            $table->unsignedBigInteger('chauffeur_id')->nullable();
+            $table->foreign('chauffeur_id')->references('id')->on('chauffeurs')->onDelete('cascade');
         });
     }
 };

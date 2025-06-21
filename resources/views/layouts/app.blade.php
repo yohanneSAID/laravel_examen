@@ -4,26 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> MMC - Reservation de Transport Routie</title>
+    <title>Optimal Trajet</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
 
 <body>
     @include('partials.header')
 
-
-    @yield('content')
+    <div class="main-content">
+        @yield('content')
+    </div>
 
     @include('partials.footer')
     @yield('scripts')
 </body>
 
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        toggleBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+    });
+</script>
+
+
+
 <script>
     // Toggle sidebar on desktop
     document.getElementById('toggleSidebar').addEventListener('click', function() {
@@ -462,6 +481,3 @@
         document.getElementById('customerModal').classList.remove('active');
     }
 </script>
-</body>
-
-</html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class VehiculeController extends Controller
 {
@@ -12,7 +13,8 @@ class VehiculeController extends Controller
      */
     public function index()
     {
-        return view('vehicules.index');
+        $vehicules = Vehicule::paginate(5);
+        return view('vehicules.index', compact('vehicules'));
     }
 
     /**

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
 use App\Models\Vehicule;
+use App\Models\Reservation;
 use App\Models\Chauffeur;
-use App\Models\Trajet;
 use App\Models\Administration;
+use App\Models\Trajet;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
 
 class ReservationController extends Controller
 {
@@ -16,9 +18,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('reservations.index');
+        $reservations = Reservation::with(['trajet', 'vehicule', 'chauffeur', 'administration'])->get();
+        return view('reservations.index', compact('reservations'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -27,9 +29,10 @@ class ReservationController extends Controller
         $trajets = Trajet::all();
         $vehicules = Vehicule::all();
         $chauffeurs = Chauffeur::all();
-        $administrations = Administration::all();
-        return view('reservations.create', compact('trajets', 'vehicules', 'chauffeurs', 'administrations'));
+        $passagers = Administration::all();
+        return view('reservations.create', compact('trajets', 'vehicules', 'chauffeurs', 'passagers'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -75,7 +78,6 @@ class ReservationController extends Controller
         $reservation->update($request->all());
         return redirect()->route('reservations.index');
     }
-
 
     /**
      * Remove the specified resource from storage.

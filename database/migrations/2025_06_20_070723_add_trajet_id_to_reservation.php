@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign(['trajet_id']);
-            $table->dropColumn(['trajet_id']);
+            $table->dropColumn('trajet_id');
         });
     }
 };

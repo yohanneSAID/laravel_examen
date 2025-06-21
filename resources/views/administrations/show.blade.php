@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Fiche chauffeur')
-@section('jumb', 'Chauffeurs')
+@section('title', 'Détails administration')
+@section('jumb', 'Administrations')
 @section('content')
 
 <style>
@@ -45,25 +45,35 @@
 
 <div class="container">
     <div class="info-card">
-        <h4>Informations sur le chauffeur</h4>
+        <h4>Informations sur l’administration</h4>
 
         <div class="info-line">
             <div class="info-label">Nom :</div>
-            <div class="info-value">{{ $chauffeur->nom }}</div>
+            <div class="info-value">{{ $administration->nom }}</div>
+        </div>
+
+        <div class="info-line">
+            <div class="info-label">Prénom :</div>
+            <div class="info-value">{{ $administration->prenom }}</div>
         </div>
 
         <div class="info-line">
             <div class="info-label">Contact :</div>
-            <div class="info-value">{{ $chauffeur->contact }}</div>
+            <div class="info-value">{{ $administration->contact }}</div>
         </div>
 
         <div class="info-line">
-            <div class="info-label">Disponibilité :</div>
-            <div class="info-value">{{ $chauffeur->disponibilite }}</div>
+            <div class="info-label">Email :</div>
+            <div class="info-value">{{ $administration->email }}</div>
+        </div>
+
+        <div class="info-line">
+            <div class="info-label">Adresse :</div>
+            <div class="info-value">{{ $administration->adresse }}</div>
         </div>
 
         <div class="d-flex justify-content-end btn-return">
-            <a href="{{ route('chauffeurs.index') }}" class="btn btn-secondary">
+            <a href="{{ route('administrations.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Retour
             </a>
         </div>

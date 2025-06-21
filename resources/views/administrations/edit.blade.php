@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Création chauffeur')
-@section('jumb', 'Chauffeurs')
+@section('title', 'Modification administration')
+@section('jumb', 'Administrations')
 @section('content')
 
 <style>
@@ -12,7 +12,7 @@
     }
 
     .form-card {
-        max-width: 600px;
+        max-width: 440px;
         width: 100%;
         border: none;
         border-radius: 12px;
@@ -51,7 +51,7 @@
     }
 
     .btn-cancel {
-        background-color: #dc3545;
+        background-color: #6c757d;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -61,39 +61,50 @@
     }
 
     .btn-cancel:hover {
-        background-color: #c82333;
+        background-color: #5a6268;
     }
 </style>
 
 <div class="container form-wrapper">
     <div class="card form-card">
         <div class="form-card-header">
-            <h5 class="mb-0">Ajouter un nouveau chauffeur</h5>
+            <h5 class="mb-0">Modifier l’administration</h5>
         </div>
         <div class="form-card-body">
-            <form action="{{ route('chauffeurs.store') }}" method="POST">
+            <form action="{{ route('administrations.update', $administration->id) }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <div class="mb-3">
                     <label for="nom" class="form-label">Nom</label>
-                    <input type="text" name="nom" id="nom" class="form-control" required>
+                    <input type="text" name="nom" id="nom" class="form-control" value="{{ old('nom', $administration->nom) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="prenom" class="form-label">Prénom</label>
+                    <input type="text" name="prenom" id="prenom" class="form-control" value="{{ old('prenom', $administration->prenom) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="contact" class="form-label">Contact</label>
-                    <input type="text" name="contact" id="contact" class="form-control" required>
+                    <input type="text" name="contact" id="contact" class="form-control" value="{{ old('contact', $administration->contact) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $administration->email) }}" required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="disponibilite" class="form-label">Disponibilité</label>
-                    <input type="text" name="disponibilite" id="disponibilite" class="form-control" required>
+                    <label for="adresse" class="form-label">Adresse</label>
+                    <input type="text" name="adresse" id="adresse" class="form-control" value="{{ old('adresse', $administration->adresse) }}" required>
                 </div>
 
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn-submit">
-                        <i class="fas fa-check me-2"></i>Enregistrer
+                        <i class="fas fa-check me-2"></i>Mettre à jour
                     </button>
-                    <a href="{{ route('chauffeurs.index') }}" class="btn-cancel">
+                    <a href="{{ route('administrations.index') }}" class="btn-cancel">
                         <i class="fas fa-times me-1"></i>Annuler
                     </a>
                 </div>

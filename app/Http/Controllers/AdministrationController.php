@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Administration;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class AdministrationController extends Controller
 {
@@ -12,7 +13,8 @@ class AdministrationController extends Controller
      */
     public function index()
     {
-        return view('administrations.index');
+        $administrations = Administration::paginate(5);
+        return view('administrations.index', compact('administrations'));
     }
 
     /**

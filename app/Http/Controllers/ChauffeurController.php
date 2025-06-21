@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chauffeur;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class ChauffeurController extends Controller
 {
@@ -12,8 +13,10 @@ class ChauffeurController extends Controller
      */
     public function index()
     {
-        return view('chauffeurs.index');
+        $chauffeurs = Chauffeur::paginate(10);
+        return view('chauffeurs.index', compact('chauffeurs'));
     }
+
 
     /**
      * Show the form for creating a new resource.

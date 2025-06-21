@@ -1,7 +1,7 @@
  <!-- Footer -->
  <footer class="footer">
      <div class="footer-content">
-         <p class="footer-text">© 2025 MMC - Tous droits réservés</p>
+         <p class="footer-text">© 2025 Optimal Trajet - Tous droits réservés</p>
          <div class="social-links">
              <a href="#" class="social-link">
                  <i class="fab fa-facebook-f"></i>

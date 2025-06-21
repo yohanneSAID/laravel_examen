@@ -9,20 +9,24 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = ['date', 'trajet_id', 'vehicule_id', 'chauffeur_id', 'statut'];
+
     public function trajet()
     {
         return $this->belongsTo(Trajet::class);
     }
+
     public function vehicule()
     {
         return $this->belongsTo(Vehicule::class);
     }
+
     public function chauffeur()
     {
         return $this->belongsTo(Chauffeur::class);
     }
-    public function passager()
+    
+    public function administration()
     {
-        return $this->belongsToMany(Administration::class);
+        return $this->belongsToMany(Administration::class, 'reservation_passager', 'reservation_id', 'administration_id');
     }
 }
