@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
+
     protected $fillable = ['date', 'trajet_id', 'vehicule_id', 'chauffeur_id', 'statut'];
 
     public function trajet()
@@ -24,9 +25,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Chauffeur::class);
     }
-    
-    public function administration()
+
+    public function administrations()
     {
-        return $this->belongsToMany(Administration::class, 'reservation_passager', 'reservation_id', 'administration_id');
+        return $this->belongsToMany(Administration::class, 'reservation_administration', 'reservation_id', 'administration_id');
     }
 }

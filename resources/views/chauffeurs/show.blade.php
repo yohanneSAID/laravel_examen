@@ -4,6 +4,12 @@
 @section('content')
 
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .info-card {
         margin: 80px auto;
         padding: 24px;

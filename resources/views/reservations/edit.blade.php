@@ -4,30 +4,50 @@
 @section('content')
 
 <style>
-    .form-wrapper {
-        margin-top: 60px;
-        margin-bottom: 40px;
-        display: flex;
-        justify-content: center;
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
     }
 
+    .form-wrapper {
+        margin-top: 8.5px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        padding: 0 15px;
+    }
+
+
     .form-card {
-        max-width: 540px;
+        max-width: 500px;
         width: 100%;
+        border: none;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
     }
 
     .form-card-header {
         background: linear-gradient(135deg, #781c32, #9b1d56);
         color: white;
-        padding: 20px 28px;
+        padding: 18.5px 28px;
     }
 
     .form-card-body {
         background-color: #fffdfc;
         padding: 28px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .form-card-footer {
+        background-color: #fff;
+        padding: 18px;
+        text-align: right;
+        border-top: 1px solid #eee;
     }
 
     .form-label {
@@ -121,18 +141,16 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="passagers" class="form-label">Passagers</label>
-                    <select name="passagers[]" id="passagers" class="form-select" multiple required>
-                        @foreach($passagers as $passager)
-                        <option value="{{ $passager->id }}"
-                            {{ in_array($passager->id, old('passagers', $reservation->administration->pluck('id')->toArray())) ? 'selected' : '' }}>
-                            {{ $passager->nom }}
+                    <label for="administrations" class="form-label">Passagers</label>
+                    <select name="administrations[]" id="administrations" class="form-select" multiple required>
+                        @foreach($administrations as $admin)
+                        <option value="{{ $admin->id }}"
+                            {{ in_array($admin->id, old('administrations', $reservation->administrations->pluck('id')->toArray())) ? 'selected' : '' }}>
+                            {{ $admin->nom }}
                         </option>
                         @endforeach
                     </select>
-                    <div class="form-text">Utilisez Ctrl (ou Cmd) + clic pour sélectionner plusieurs passagers.</div>
                 </div>
-
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn-submit">Mettre à jour</button>
                     <a href="{{ route('reservations.index') }}" class="btn-cancel">Annuler</a>

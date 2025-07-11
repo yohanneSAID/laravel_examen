@@ -9,4 +9,9 @@ class Administration extends Model
 {
     use HasFactory;
     protected $fillable = ['nom', 'prenom', 'contact', 'email', 'adresse'];
+
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

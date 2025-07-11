@@ -3,6 +3,12 @@
 @section('content')
 
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .orders-card {
         margin-top: 80px;
         padding: 20px;
@@ -21,6 +27,11 @@
 
     .action-btn i {
         pointer-events: none;
+    }
+
+    .dataTables_wrapper {
+        overflow-y: auto;
+        max-height: 60vh;
     }
 </style>
 
@@ -56,12 +67,12 @@
                 <td>{{ $administration->email }}</td>
                 <td>{{ $administration->adresse }}</td>
                 <td class="d-flex justify-content-between">
-                    <a href="{{ route('administrations.show', $administration->id) }}" class="btn btn-primary">
+                    <a href="{{ route('administrations.show', $administration->id) }}">
                         <button class="action-btn view-btn">
                             <i class="fas fa-eye"></i>
                         </button>
                     </a>
-                    <a href="{{ route('administrations.edit', $administration->id) }}" class="btn btn-success">
+                    <a href="{{ route('administrations.edit', $administration->id) }}">
                         <button class="action-btn edit-btn">
                             <i class="fas fa-edit"></i>
                         </button>

@@ -1,78 +1,160 @@
 @extends('layouts.app')
-@section('title', 'Creation vehicule')
-@section('jumb', 'Clients')
+@section('title', 'Création réservation')
+@section('jumb', 'Réservations')
 @section('content')
+<style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .form-wrapper {
+        margin-top: 8.5px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        padding: 0 15px;
+    }
 
 
-<div class="row mt-5">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 bg-light mt-4 p-4">
+    .form-card {
+        max-width: 500px;
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-card-header {
+        background: linear-gradient(135deg, #781c32, #9b1d56);
+        color: white;
+        padding: 18.5px 28px;
+    }
+
+    .form-card-body {
+        background-color: #fffdfc;
+        padding: 28px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .form-card-footer {
+        background-color: #fff;
+        padding: 18px;
+        text-align: right;
+        border-top: 1px solid #eee;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #8a1f41, #c42c6b);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(135deg, #a2254d, #dc3273);
+    }
+
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        margin-left: 10px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<div class="container form-wrapper">
+    <div class="card form-card">
+        <div class="form-card-header">
+            <h5 class="mb-0">Ajouter une nouvelle réservation</h5>
+        </div>
+
         <form action="{{route('reservations.store')}}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="date" class="form-label">Date de réservation</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+            <div class="form-card-body">
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date de réservation</label>
+                    <input type="date" name="date" id="date" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="trajet_id" class="form-label">Trajet</label>
+                    <select name="trajet_id" id="trajet_id" class="form-select" required>
+                        <option value="">-- Choisir un trajet --</option>
+                        @foreach($trajets as $trajet)
+                        <option value="{{ $trajet->id }}">{{ $trajet->destination }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="vehicule_id" class="form-label">Véhicule</label>
+                    <select name="vehicule_id" id="vehicule_id" class="form-select" required>
+                        <option value="">-- Choisir un véhicule --</option>
+                        @foreach($vehicules as $vehicule)
+                        <option value="{{ $vehicule->id }}">{{ $vehicule->immatriculation }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="chauffeur_id" class="form-label">Chauffeur</label>
+                    <select name="chauffeur_id" id="chauffeur_id" class="form-select" required>
+                        <option value="">-- Choisir un chauffeur --</option>
+                        @foreach($chauffeurs as $chauffeur)
+                        <option value="{{ $chauffeur->id }}">{{ $chauffeur->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="statut" class="form-label">Statut</label>
+                    <select name="statut" id="statut" class="form-select" required>
+                        <option value="">-- Sélectionner un statut --</option>
+                        <option value="en_attente">En attente</option>
+                        <option value="confirmee">Confirmée</option>
+                        <option value="terminee">Terminée</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="passagers" class="form-label">Passagers</label>
+                    <select name="administrations[]" id="administrations" class="form-select" multiple>
+                        @foreach($administrations as $admin)
+                        <option value="{{ $admin->id }}">{{ $admin->nom }}</option>
+                        @endforeach
+                    </select>
+
+
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="trajet_id" class="form-label">Trajet</label>
-                <select name="trajet_id" id="trajet_id" class="form-select" required>
-                    <option value="">-- Choisir un trajet --</option>
-                    @foreach($trajets as $trajet)
-                    <option value="{{ $trajet->id }}">
-                        {{ $trajet->destination }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="vehicule_id" class="form-label">Véhicule</label>
-                <select name="vehicule_id" id="vehicule_id" class="form-select" required>
-                    <option value="">-- Choisir un véhicule --</option>
-                    @foreach($vehicules as $vehicule)
-                    <option value="{{ $vehicule->id }}">
-                        {{ $vehicule->immatriculation }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="chauffeur_id" class="form-label">Chauffeur</label>
-                <select name="chauffeur_id" id="chauffeur_id" class="form-select" required>
-                    <option value="">-- Choisir un chauffeur --</option>
-                    @foreach($chauffeurs as $chauffeur)
-                    <option value="{{ $chauffeur->id }}">
-                        {{ $chauffeur->nom }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="statut" class="form-label">Statut</label>
-                <input type="text" name="statut" id="statut" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="passagers" class="form-label">Passagers</label>
-                <select name="passagers[]" id="passagers" class="form-select" multiple>
-                    @foreach($passagers as $passager)
-                    <option value="{{ $passager->id }}">
-                        {{ $passager->nom }}
-                    </option>
-                    @endforeach
-                </select>
-                <div class="form-text">Utilisez Ctrl (ou Cmd) + clic pour sélectionner plusieurs passagers.</div>
-            </div>
-
-            <div class="bouton mt-3" style="float: right;">
-                <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
-                <a type="button" href="{{route('reservations.index')}}" class="btn btn-danger mt-3">Annuler</a>
+            <div class="form-card-footer">
+                <button type="submit" class="btn-submit">Enregistrer</button>
+                <a href="{{route('reservations.index')}}" class="btn-cancel">Annuler</a>
             </div>
         </form>
     </div>
 </div>
-
 @endsection

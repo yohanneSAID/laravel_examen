@@ -4,6 +4,12 @@
 @section('content')
 
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .form-wrapper {
         margin-top: 60px;
         margin-bottom: 40px;
@@ -86,8 +92,14 @@
 
                 <div class="mb-4">
                     <label for="disponibilite" class="form-label">Disponibilité</label>
-                    <input type="text" name="disponibilite" id="disponibilite" class="form-control" required>
+                    <select name="disponibilite" id="disponibilite" class="form-select" required>
+                        <option value="">-- Sélectionner une disponibilité --</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="en_mission">En mission</option>
+                        <option value="indisponible">Indisponible</option>
+                    </select>
                 </div>
+
 
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn-submit">

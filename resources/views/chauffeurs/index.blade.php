@@ -2,8 +2,14 @@
 
 @section('content')
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .orders-card {
-        margin-top: 80px;
+        margin-top: 20px;
         padding: 20px;
     }
 
@@ -11,15 +17,6 @@
         height: 60px;
         padding: 10px;
         font-size: 0.85em;
-    }
-
-    .orders-table th,
-    .orders-table td {
-        vertical-align: middle;
-    }
-
-    .action-btn i {
-        pointer-events: none;
     }
 </style>
 
@@ -49,7 +46,14 @@
                 <td>{{ $chauffeur->id }}</td>
                 <td>{{ $chauffeur->nom }}</td>
                 <td>{{ $chauffeur->contact }}</td>
-                <td>{{$chauffeur->disponibilite}}</td>
+                <td>
+                    <span class="status-badge 
+        {{ $chauffeur->disponibilite === 'disponible' ? 'status-delivered' : '' }}
+        {{ $chauffeur->disponibilite === 'en mission' ? 'status-processing' : '' }}
+        {{ $chauffeur->disponibilite === 'indisponible' ? 'status-pending' : '' }}">
+                        {{($chauffeur->disponibilite) }}
+                    </span>
+                </td>
                 <td>
                     <a href="{{ route('chauffeurs.show', $chauffeur->id) }}">
                         <button class="action-btn view-btn">
@@ -61,6 +65,8 @@
                             <i class="fas fa-edit"></i>
                         </button>
                     </a>
+
+
                     <form action="{{ route('chauffeurs.destroy', $chauffeur->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Confirmer la suppression de ce chauffeur ?')">
                         @csrf
                         @method('DELETE')

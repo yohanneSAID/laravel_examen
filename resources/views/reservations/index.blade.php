@@ -3,6 +3,12 @@
 @section('content')
 
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .orders-card {
         margin-top: 80px;
         padding: 20px;
@@ -43,21 +49,34 @@
             <tr>
                 <td>{{$reservation->id}}</td>
                 <td>{{$reservation->date}}</td>
-                <td>{{$reservation->trajet->destination}}</td>
-                <td>{{$reservation->vehicule->immatriculation}}</td>
-                <td>{{$reservation->chauffeur->nom}}</td>
                 <td>
-                    <span class="status-badge
-                        {{ $reservation->statut === 'confirmé' ? 'status-delivered' : '' }}
-                        {{ $reservation->statut === 'en_attente' ? 'status-pending' : '' }}">
+                    {{ $reservation->trajet ? $reservation->trajet->destination : 'Non défini' }}
+                </td>
+
+                <td>
+                    {{ $reservation->vehicule ? $reservation->vehicule->immatriculation : 'Non défini' }}
+                </td>
+
+                <td>
+                    {{ $reservation->chauffeur ? $reservation->chauffeur->nom : 'Non défini' }}
+                </td>
+
+                <td>
+                    <span class="status-badge 
+        {{ $reservation->statut === 'confirmée' ? 'status-delivered' : '' }}
+        {{ $reservation->statut === 'terminée' ? 'status-processing' : '' }}
+        {{ $reservation->statut === 'en_attente' ? 'status-pending' : '' }}">
                         {{ $reservation->statut }}
                     </span>
                 </td>
                 <td>
-                    @foreach($reservation->administration as $admin)
-                    {{$admin->nom}}
-                    @endforeach
+                    @if($reservation->administrations->isNotEmpty())
+                    {{ $reservation->administrations->pluck('nom')->join(', ') }}
+                    @else
+                    <em>Aucun passager</em>
+                    @endif
                 </td>
+
 
                 <td>
                     <a href="{{ route('reservations.show', $reservation->id) }}">

@@ -2,8 +2,14 @@
 
 @section('content')
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .form-wrapper {
-        margin-top: 60px;
+        margin-top: 8.5px;
         margin-bottom: 40px;
         display: flex;
         justify-content: center;

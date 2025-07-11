@@ -1,5 +1,13 @@
 @extends('layouts.app')
 @section('content')
+
+<style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+</style>
 <!-- Main Content Area -->
 <main class="content">
     <!-- Dashboard Summary -->
@@ -11,7 +19,7 @@
                     <i class="fas fa-shopping-cart"></i>
                 </div>
             </div>
-            <div class="card-value">124</div>
+            <div class="card-value">2563</div>
             <div class="card-trend">
                 <span class="trend-badge trend-up">
                     <i class="fas fa-arrow-up mr-1"></i> 12%
@@ -98,7 +106,7 @@
         </div>
     </div>
 
-    <!-- Recent Orders -->
+    <!-- Commande  -->
     <div class="orders-card">
         <div class="orders-header">
             <div>
@@ -185,116 +193,6 @@
         </table>
     </div>
 </main>
-
-
-
-<!-- View Order Modal -->
-<div id="modal" class="modal">
-    <div class="modal-overlay" onclick="closeModal()"></div>
-    <div class="modal-container animate-slide-in">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Détails de la commande <span id="modalOrderId"></span></h2>
-                <button onclick="closeModal()" class="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h3 class="modal-section-title">Produits:</h3>
-                    <ul id="modalProducts" class="products-list">
-                        <!-- Products will be added here by JavaScript -->
-                    </ul>
-                </div>
-                <div class="order-summary">
-                    <div>
-                        <h3 class="summary-label">Statut:</h3>
-                        <p id="modalStatus" class="summary-value"></p>
-                    </div>
-                    <div>
-                        <h3 class="summary-label">Total:</h3>
-                        <p id="modalTotal" class="summary-value total-value"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeModal()" class="modal-btn modal-btn-secondary">Fermer</button>
-                <button class="modal-btn modal-btn-primary">Imprimer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add/Edit Order Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-overlay" onclick="closeEditModal()"></div>
-    <div class="modal-container animate-slide-in">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title"><span id="modalAction">Modifier</span> une commande</h2>
-                <button onclick="closeEditModal()" class="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Client</label>
-                    <input type="text" class="form-input" placeholder="Nom du client">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Produits</label>
-                    <textarea class="form-input form-textarea" placeholder="Liste des produits"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Statut</label>
-                    <select class="form-input">
-                        <option>En attente</option>
-                        <option>En cours</option>
-                        <option>Livré</option>
-                        <option>Annulé</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Méthode de paiement</label>
-                    <select class="form-input">
-                        <option>Espèces</option>
-                        <option>Carte bancaire</option>
-                        <option>Mobile Money</option>
-                        <option>Virement</option>
-                        <option>Chèque</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeEditModal()" class="modal-btn modal-btn-secondary">Annuler</button>
-                <button id="confirmActionBtn" class="modal-btn modal-btn-primary">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div id="deleteModal" class="modal">
-    <div class="modal-overlay" onclick="closeDeleteModal()"></div>
-    <div class="modal-container animate-slide-in">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Confirmer la suppression</h2>
-                <button onclick="closeDeleteModal()" class="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body delete-confirmation">
-                <p class="delete-warning">Êtes-vous sûr de vouloir supprimer cette commande ? Cette action est
-                    irréversible.</p>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeDeleteModal()" class="modal-btn modal-btn-secondary">Annuler</button>
-                <button class="modal-btn delete-btn-danger">Supprimer</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
@@ -409,72 +307,6 @@
         document.getElementById('modalStatus').textContent = status;
         document.getElementById('modalTotal').textContent = total;
     }
-
-    // Close modal
-    function closeModal() {
-        document.getElementById('modal').classList.remove('active');
-    }
-
-    // Edit buttons handler
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const orderId = this.getAttribute('data-order-id');
-            openEditModal(orderId, 'edit');
-        });
-    });
-
-    // Delete buttons handler
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const orderId = this.getAttribute('data-order-id');
-            openDeleteModal(orderId);
-        });
-    });
-
-    // Open edit modal
-    function openEditModal(orderId, action = 'add') {
-        const editModal = document.getElementById('editModal');
-        editModal.classList.add('active');
-        document.getElementById('modalAction').textContent = action === 'add' ? 'Ajouter' : 'Modifier';
-        document.getElementById('confirmActionBtn').textContent = action === 'add' ? 'Ajouter' : 'Enregistrer';
-
-        if (action === 'edit') {
-            // In a real app, load data from API based on orderId
-            console.log('Loading data for order:', orderId);
-        }
-    }
-
-    function openAddModal() {
-        openEditModal(null, 'add');
-    }
-
-    // Close edit modal
-    function closeEditModal() {
-        document.getElementById('editModal').classList.remove('active');
-    }
-
-    // Open delete modal
-    function openDeleteModal(orderId) {
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.classList.add('active');
-        // In real app, store orderId for deletion
-        console.log('Preparing to delete order:', orderId);
-    }
-
-    // Close delete modal
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('active');
-    }
-
-    // Notification dropdown toggle
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationDropdown = document.getElementById('notificationDropdown');
-
-    notificationBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        notificationDropdown.style.display = notificationDropdown.style.display === 'block' ? 'none' : 'block';
-    });
-
     // Close dropdown when clicking outside
     document.addEventListener('click', function() {
         notificationDropdown.style.display = 'none';

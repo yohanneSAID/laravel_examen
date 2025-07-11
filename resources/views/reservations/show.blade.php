@@ -4,6 +4,12 @@
 @section('content')
 
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .info-card {
         margin: 80px auto;
         padding: 24px;
@@ -47,13 +53,17 @@
         <div class="info-row"><span class="info-label">Véhicule :</span><span>{{ $reservation->vehicule->immatriculation }}</span></div>
         <div class="info-row"><span class="info-label">Chauffeur :</span><span>{{ $reservation->chauffeur->nom }}</span></div>
         <div class="info-row"><span class="info-label">Statut :</span><span>{{ $reservation->statut }}</span></div>
-        <div class="info-row"><span class="info-label">Passagers :</span>
+        <div class="info-row">
+            <span class="info-label">Passagers :</span>
             <span>
-                @foreach($reservation->administration as $admin)
-                {{ $admin->nom }}{{ !$loop->last ? ',' : '' }}
-                @endforeach
+                @if($reservation->administrations->isNotEmpty())
+                {{ $reservation->administrations->pluck('nom')->join(', ') }}
+                @else
+                <em>Aucun passager</em>
+                @endif
             </span>
         </div>
+
 
         <div class="btn-return">
             <a href="{{ route('reservations.index') }}" class="btn btn-secondary">

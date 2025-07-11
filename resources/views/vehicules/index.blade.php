@@ -2,8 +2,14 @@
 
 @section('content')
 <style>
+    html,
+    body {
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .orders-card {
-        margin-top: 80px;
+        margin-top: 40px;
         padding: 20px;
     }
 
@@ -18,7 +24,7 @@
     <div class="orders-header d-flex justify-content-between align-items-center mb-4">
         <h2 class="orders-title">Liste général des véhicules</h2>
         <a href="{{route('vehicules.create')}}">
-            <button onclick="openAddModal()" class="add-order-btn btn btn-success">
+            <button class="add-order-btn btn btn-success">
                 <i class="fas fa-plus"></i> Ajouter un véhicule
             </button>
         </a>
@@ -46,14 +52,11 @@
                 <td>
                     <span class="status-badge 
         {{ $vehicule->statut === 'disponible' ? 'status-delivered' : '' }}
-        {{ $vehicule->statut === 'en_mission' ? 'status-processing' : '' }}
-        {{ $vehicule->statut === 'en_reparation' ? 'status-pending' : '' }}">
+        {{ $vehicule->statut === 'en mission' ? 'status-processing' : '' }}
+        {{ $vehicule->statut === 'en reparation' ? 'status-pending' : '' }}">
                         {{ $vehicule->statut }}
                     </span>
                 </td>
-
-
-
                 <td>
                     <a href="{{route('vehicules.show', $vehicule->id)}}">
                         <button class="action-btn view-btn">
@@ -65,24 +68,17 @@
                             <i class="fas fa-edit"></i>
                         </button>
                     </a>
-                    <a href="{{route('vehicules.destroy', $vehicule->id)}}">
-
+                    <form action="{{route('vehicules.destroy', $vehicule->id)}}" method="POST" style="display:inline;" onsubmit="return confirm('Confirmer la suppression de ce véhicule ?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="action-btn delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce véhicule ?')">
                             <i class="fas fa-trash"></i>
                         </button>
-                    </a>
-
+                    </form>
                 </td>
-
             </tr>
             @endforeach
         </tbody>
     </table>
-
-    <div class="d-flex justify-content-center mt-3">
-        {{$vehicules->links('pagination::bootstrap-5')}}
-    </div>
 </div>
 @endsection

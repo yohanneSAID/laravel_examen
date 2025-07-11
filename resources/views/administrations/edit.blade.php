@@ -2,33 +2,45 @@
 @section('title', 'Modification administration')
 @section('jumb', 'Administrations')
 @section('content')
-
 <style>
     .form-wrapper {
-        margin-top: 60px;
-        margin-bottom: 40px;
+        margin-top: 8.5px;
+        margin-bottom: 30px;
         display: flex;
         justify-content: center;
+        padding: 0 15px;
     }
 
+
     .form-card {
-        max-width: 440px;
+        max-width: 500px;
         width: 100%;
         border: none;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
     }
 
     .form-card-header {
         background: linear-gradient(135deg, #781c32, #9b1d56);
         color: white;
-        padding: 20px 28px;
+        padding: 18.5px 28px;
     }
 
     .form-card-body {
         background-color: #fffdfc;
         padding: 28px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .form-card-footer {
+        background-color: #fff;
+        padding: 18px;
+        text-align: right;
+        border-top: 1px solid #eee;
     }
 
     .form-label {
@@ -51,7 +63,7 @@
     }
 
     .btn-cancel {
-        background-color: #6c757d;
+        background-color: #dc3545;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -61,7 +73,7 @@
     }
 
     .btn-cancel:hover {
-        background-color: #5a6268;
+        background-color: #c82333;
     }
 </style>
 
